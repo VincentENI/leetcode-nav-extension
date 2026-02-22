@@ -26,7 +26,7 @@
 
 ### Firefox 安装
 
-1. 下载并**解压** `leetcode-nav-extension.zip`
+1. 下载并**解压** `leetcode-nav-extension-firefox.zip`
 2. 地址栏输入 `about:debugging`
 3. 点击左侧 **"此 Firefox"**
 4. 点击 **"临时载入附加组件"**

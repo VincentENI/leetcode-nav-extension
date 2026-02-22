@@ -24,6 +24,15 @@
 5. 选择解压后的 `leetcode-nav-extension` 文件夹
 6. 安装完成！🎉
 
+### Firefox 安装
+
+1. 下载并**解压** `leetcode-nav-extension.zip`
+2. 地址栏输入 `about:debugging`
+3. 点击左侧 **"此 Firefox"**
+4. 点击 **"临时载入附加组件"**
+5. 进入解压目录，选择 **`manifest.json`** 文件
+6. 安装完成！（注意：临时安装在重启浏览器后需重新加载）
+
 ## 🚀 使用方法
 
 1. 打开任意 LeetCode 题单讨论页面，例如：  

@@ -173,7 +173,6 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
   line-height: 1.4;
   border-left: 3px solid transparent;
   transition: all 0.15s ease;
-  word-break: break-all;
 }
 
 .lc-nav-item:hover {
@@ -243,9 +242,12 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
 .lc-nav-label {
   flex: 1;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  display: block;
+  max-height: 2.8em;
+  line-height: 1.4em;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 /* 底部统计 */

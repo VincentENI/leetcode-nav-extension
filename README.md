@@ -60,5 +60,6 @@ leetcode-nav-extension/
 
 - ✅ Google Chrome 88+
 - ✅ Microsoft Edge 88+
+- ✅ Mozilla Firefox 57+
 - ✅ 支持 leetcode.cn 和 leetcode.com
 - ✅ 支持亮色/深色主题

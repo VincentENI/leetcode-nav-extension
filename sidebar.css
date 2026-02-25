@@ -1,45 +1,48 @@
-/* LeetCode 题单导航助手 - Sidebar Styles */
+/* LeetCode 题单导航助手 - Sidebar Styles v1.2.0 */
 
+/* ── 侧边栏主体 ── */
 #lc-nav-sidebar {
   position: fixed;
-  top: 60px;
+  top: 0;
   left: 0;
-  width: 260px;
-  height: calc(100vh - 60px);
+  /* 宽度由 JS 动态设置，此处为回退值 */
+  width: 240px;
+  height: 100vh;
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
-  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
-  z-index: 99999;
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.08);
+  z-index: 99998;
   display: flex;
   flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 13px;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.15s ease;
   transform: translateX(0);
+  box-sizing: border-box;
 }
 
 #lc-nav-sidebar.collapsed {
-  transform: translateX(-270px);
+  transform: translateX(-105%);
 }
 
-/* 切换按钮 */
+/* ── 切换按钮 ── */
 #lc-nav-toggle {
   position: fixed;
-  top: 70px;
-  left: 0;
-  width: 32px;
-  height: 40px;
+  top: 72px;
+  /* left 由 JS 动态设置 */
+  width: 28px;
+  height: 44px;
   background: #ff6b35;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 10px 10px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 100000;
+  z-index: 99999;
   color: white;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.18);
   transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s;
-  left: 260px;
 }
 
 #lc-nav-toggle:hover {
@@ -47,27 +50,54 @@
 }
 
 #lc-nav-toggle svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
 }
 
-#lc-nav-sidebar.collapsed ~ #lc-nav-toggle,
-body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
-  left: 0;
+/* ── 拖拽调整宽度手柄 ── */
+#lc-nav-resize {
+  position: absolute;
+  top: 0;
+  right: -4px;
+  width: 8px;
+  height: 100%;
+  cursor: ew-resize;
+  z-index: 100001;
+  background: transparent;
+  transition: background 0.15s;
 }
 
-/* 当侧边栏折叠时，按钮移到最左 */
-#lc-nav-sidebar.collapsed + #lc-nav-toggle {
-  left: 0 !important;
+#lc-nav-resize:hover,
+#lc-nav-resize:active {
+  background: rgba(255, 107, 53, 0.25);
 }
 
-/* 标题区 */
+#lc-nav-resize::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3px;
+  height: 32px;
+  border-radius: 2px;
+  background: #d1d5db;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+#lc-nav-resize:hover::after {
+  opacity: 1;
+  background: #ff6b35;
+}
+
+/* ── 标题区 ── */
 .lc-nav-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px 12px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 14px 14px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
   background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
   color: white;
   flex-shrink: 0;
@@ -78,20 +108,23 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
   align-items: center;
   gap: 6px;
   font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.3px;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lc-nav-close {
   background: none;
   border: none;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.85);
   cursor: pointer;
-  font-size: 14px;
-  padding: 2px 6px;
+  font-size: 13px;
+  padding: 3px 6px;
   border-radius: 4px;
   line-height: 1;
   transition: background 0.15s;
+  flex-shrink: 0;
 }
 
 .lc-nav-close:hover {
@@ -99,9 +132,9 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
   color: white;
 }
 
-/* 搜索框 */
+/* ── 搜索框 ── */
 .lc-nav-search-wrap {
-  padding: 10px 12px;
+  padding: 9px 10px;
   border-bottom: 1px solid #f0f0f0;
   position: relative;
   flex-shrink: 0;
@@ -109,7 +142,7 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
 
 .lc-nav-search {
   width: 100%;
-  padding: 6px 30px 6px 10px;
+  padding: 6px 28px 6px 10px;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   font-size: 12px;
@@ -132,47 +165,44 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
 
 .lc-nav-search-icon {
   position: absolute;
-  right: 22px;
+  right: 20px;
   top: 50%;
   transform: translateY(-50%);
   color: #9ca3af;
   pointer-events: none;
+  display: flex;
 }
 
-/* 目录列表 */
+/* ── 目录列表 ── */
 .lc-nav-list {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 6px 0;
+  padding: 5px 0;
   scroll-behavior: smooth;
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
 }
 
-.lc-nav-list::-webkit-scrollbar {
-  width: 4px;
-}
-.lc-nav-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-.lc-nav-list::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 4px;
-}
-.lc-nav-list::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
-}
+/* Chrome / Edge / Safari */
+.lc-nav-list::-webkit-scrollbar { width: 4px; }
+.lc-nav-list::-webkit-scrollbar-track { background: transparent; }
+.lc-nav-list::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+.lc-nav-list::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
-/* 目录项 */
+/* ── 目录项 ── */
 .lc-nav-item {
   display: flex;
   align-items: flex-start;
-  gap: 7px;
-  padding: 6px 12px 6px 12px;
+  gap: 6px;
+  padding: 5px 10px 5px 12px;
   cursor: pointer;
   color: #4b5563;
-  line-height: 1.4;
+  line-height: 1.45;
   border-left: 3px solid transparent;
-  transition: all 0.15s ease;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  min-width: 0;
 }
 
 .lc-nav-item:hover {
@@ -183,12 +213,12 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
 
 .lc-nav-item.active {
   background: #fff0ea;
-  color: #ff6b35;
+  color: #e55a26;
   border-left-color: #ff6b35;
   font-weight: 500;
 }
 
-/* 层级圆点 */
+/* ── 层级圆点 ── */
 .lc-nav-dot {
   width: 6px;
   height: 6px;
@@ -196,7 +226,7 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
   background: #d1d5db;
   flex-shrink: 0;
   margin-top: 5px;
-  transition: background 0.15s;
+  transition: background 0.12s;
 }
 
 .lc-nav-item:hover .lc-nav-dot,
@@ -204,122 +234,59 @@ body:has(#lc-nav-sidebar.collapsed) #lc-nav-toggle {
   background: #ff6b35;
 }
 
-.lc-nav-level-1 > .lc-nav-dot {
-  width: 7px;
-  height: 7px;
-  background: #6b7280;
-}
-
-.lc-nav-level-2 > .lc-nav-dot {
-  width: 6px;
-  height: 6px;
-  background: #9ca3af;
-}
-
-.lc-nav-level-1 {
-  font-weight: 600;
-  font-size: 13px;
-  color: #1f2937;
-}
-
-.lc-nav-level-2 {
-  font-size: 12.5px;
-  color: #374151;
-}
-
-.lc-nav-level-3 {
-  font-size: 12px;
-  color: #4b5563;
-}
-
+.lc-nav-level-1 { font-weight: 600; font-size: 13px; color: #1f2937; }
+.lc-nav-level-2 { font-size: 12.5px; color: #374151; }
+.lc-nav-level-3 { font-size: 12px; color: #4b5563; }
 .lc-nav-level-4,
 .lc-nav-level-5,
-.lc-nav-level-6 {
-  font-size: 11.5px;
-  color: #6b7280;
-}
+.lc-nav-level-6 { font-size: 11.5px; color: #6b7280; }
+
+.lc-nav-level-1 > .lc-nav-dot { width: 7px; height: 7px; background: #6b7280; }
+.lc-nav-level-2 > .lc-nav-dot { width: 6px; height: 6px; background: #9ca3af; }
 
 .lc-nav-label {
   flex: 1;
-  overflow: hidden;
+  min-width: 0;
   display: block;
-  max-height: 2.8em;
-  line-height: 1.4em;
+  overflow: hidden;
   word-break: break-all;
-  text-overflow: ellipsis;
-  white-space: normal;
+  max-height: 2.9em;
+  line-height: 1.45em;
 }
 
-/* 底部统计 */
+/* ── 底部统计 ── */
 .lc-nav-footer {
-  padding: 8px 16px;
+  padding: 7px 14px;
   font-size: 11px;
   color: #9ca3af;
   border-top: 1px solid #f0f0f0;
   text-align: center;
   flex-shrink: 0;
   background: #fafafa;
+  white-space: nowrap;
 }
 
-/* 暗色模式适配 */
+/* ── 暗色模式 ── */
 @media (prefers-color-scheme: dark) {
   #lc-nav-sidebar {
     background: #1f2937;
     border-right-color: #374151;
-    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.45);
   }
-
-  .lc-nav-header {
-    border-bottom-color: #374151;
-  }
-
-  .lc-nav-search-wrap {
-    border-bottom-color: #374151;
-  }
-
-  .lc-nav-search {
-    background: #111827;
-    border-color: #374151;
-    color: #f3f4f6;
-  }
-
-  .lc-nav-search:focus {
-    background: #1f2937;
-  }
-
-  .lc-nav-search::placeholder {
-    color: #6b7280;
-  }
-
-  .lc-nav-item {
-    color: #d1d5db;
-  }
-
-  .lc-nav-item:hover {
-    background: rgba(255, 107, 53, 0.1);
-    color: #ff8c5a;
-  }
-
-  .lc-nav-item.active {
-    background: rgba(255, 107, 53, 0.15);
-    color: #ff8c5a;
-  }
-
-  .lc-nav-level-1 {
-    color: #f3f4f6;
-  }
-
-  .lc-nav-level-2 {
-    color: #e5e7eb;
-  }
-
-  .lc-nav-footer {
-    background: #111827;
-    border-top-color: #374151;
-  }
+  .lc-nav-header { border-bottom-color: rgba(255,255,255,0.1); }
+  .lc-nav-search-wrap { border-bottom-color: #374151; }
+  .lc-nav-search { background: #111827; border-color: #374151; color: #f3f4f6; }
+  .lc-nav-search:focus { background: #1f2937; }
+  .lc-nav-search::placeholder { color: #6b7280; }
+  .lc-nav-item { color: #d1d5db; }
+  .lc-nav-item:hover { background: rgba(255, 107, 53, 0.1); color: #ff8c5a; }
+  .lc-nav-item.active { background: rgba(255, 107, 53, 0.15); color: #ff8c5a; }
+  .lc-nav-level-1 { color: #f3f4f6; }
+  .lc-nav-level-2 { color: #e5e7eb; }
+  .lc-nav-footer { background: #111827; border-top-color: #374151; color: #6b7280; }
+  #lc-nav-resize::after { background: #4b5563; }
 }
 
-/* LeetCode 深色主题适配 */
 [data-theme="dark"] #lc-nav-sidebar,
 .dark #lc-nav-sidebar {
   background: #1f2937;
